@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!--
+  Navegacion MINIMA y sin estilar, solo para poder pasar de una pantalla a
+  otra mientras desarrollais. No es la barra de navegacion final: teneis
+  que disenarla y construirla vosotros con el editor visual + Bootstrap,
+  siguiendo el wireframe, y sustituir esta version en mi-lista.html.
+-->
+<div class="barra-navegacion" th:fragment="nav">
+    <!-- El logo con un link a Mi Lista -->
+    <a th:href="@{/mi-lista}" class="logo">
+        <img th:src="@{/images/logo_cinelista.jpeg}" alt="CineLista Logo" style="height: 55px !important; width: auto !important;">
+    </a>
+
+    <div class="enlaces">
+        <a th:href="@{/mi-lista}">MI LISTA</a>
+        <a th:href="@{/anadir-titulo}">Añadir Título</a>
+        <a th:href="@{/estrenos}">Estrenos</a>
+        <a th:href="@{/estadisticas}">Estadísticas</a>
+    </div>
+</div>
+
+</body>
+</html>

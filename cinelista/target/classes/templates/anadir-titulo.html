@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CineLista - Anadir titulo</title>
+    <th:block th:replace="~{fragments/cabecera :: comunes}"></th:block>
+</head>
+<body>
+
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<!--
+  TODO:
+  El formulario de abajo tiene solo el campo "titulo" a proposito. Falta
+  por vuestra parte anadir: genero, plataforma, estado y valoracion,
+  colocando el boton de guardar al final, eligiendo el control html5 mas
+  adecuado para cada campo (checkbox, radio, select, etc.) y maquetandolo
+  con el editor visual + Bootstrap.
+
+  El envio ya esta conectado: hace POST a /anadir-titulo y el controlador
+  (PeliculaController) guarda la pelicula en el repositorio.
+-->
+
+<h1>Añadir título</h1>
+
+<form th:action="@{/anadir-titulo}"
+      th:object="${pelicula}"
+      method="post"
+      id="formulario">
+
+    <div>
+        <label for="titulo">TÍTULO</label>
+        <input type="text" id="titulo" th:field="*{titulo}" required>
+    </div>
+
+    <div>
+        <label for="genero">GÉNERO</label>
+        <input type="text" id="genero" th:field="*{genero}" required>
+    </div>
+
+    <div>
+        <label for="plataforma">PLATAFORMA</label>
+        <input type="text" id="plataforma" th:field="*{plataforma}">
+    </div>
+
+    <div>
+        <p>ESTADO DE LA PELÍCULA:</p>
+
+        <input type="radio" id="vista_si"
+               th:field="*{estado}" value="vista">
+        <label for="vista_si">Vista</label>
+
+        <input type="radio" id="vista_no"
+               th:field="*{estado}" value="pendiente">
+        <label for="vista_no">Pendiente de ver</label>
+    </div>
+
+    <div>
+        <p>VALORACIÓN:</p>
+
+        <input type="radio" id="val1" th:field="*{valoracion}" value="1">
+        <label for="val1">1</label>
+
+        <input type="radio" id="val2" th:field="*{valoracion}" value="2">
+        <label for="val2">2</label>
+
+        <input type="radio" id="val3" th:field="*{valoracion}" value="3">
+        <label for="val3">3</label>
+
+        <input type="radio" id="val4" th:field="*{valoracion}" value="4">
+        <label for="val4">4</label>
+
+        <input type="radio" id="val5" th:field="*{valoracion}" value="5">
+        <label for="val5">5</label>
+    </div>
+
+    <button type="submit">GUARDAR</button>
+</form>
+
+</body>
+</html>

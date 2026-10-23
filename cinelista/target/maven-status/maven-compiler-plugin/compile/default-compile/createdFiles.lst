@@ -1,0 +1,9 @@
+com\example\cinelista\config\ServletInitializer.class
+com\example\cinelista\controller\EstrenosController.class
+com\example\cinelista\model\Estadistica.class
+com\example\cinelista\CinelistaApplication.class
+com\example\cinelista\model\Estreno.class
+com\example\cinelista\model\Pelicula.class
+com\example\cinelista\repository\PeliculaRepository.class
+com\example\cinelista\controller\EstadisticasController.class
+com\example\cinelista\controller\PeliculaController.class

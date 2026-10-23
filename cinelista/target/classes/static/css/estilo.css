@@ -1,0 +1,353 @@
+/*
+  TODO:
+  Definid aqui vuestra paleta de 2 colores y la tipografia elegida para
+  CineLista. Definid tambien cualquier otro estilo.
+
+  :root {
+      --color-primario: #000000;
+      --color-secundario: #ffffff;
+      --fuente-principal: "Nombre de la fuente", sans-serif;
+  }
+*/
+/* =========================================
+   COMPENSACIÓN PARA BARRA FIJA
+   ========================================= */
+body {
+    padding-top: 80px !important; /* Espacio para que el contenido no se meta bajo la barra */
+}
+
+/* =========================================
+   BARRA DE NAVEGACIÓN FIJA (CON DIVS)
+   ========================================= */
+.barra-navegacion {
+    background-color: #2C3335 !important; /* Gris Carbón Profundo */
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+    /* Configuración de barra fija */
+    position: fixed !important;
+    top: 0 !important;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 9999 !important; /* Capa más alta */
+}
+
+/* Contenedor del Logo */
+.barra-navegacion .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+/* Dimensiones del Logo para evitar que ensanche la barra */
+.logo-img {
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05); /* Efecto al pasar el cursor */
+}
+
+/* Contenedor de Enlaces */
+.barra-navegacion .enlaces {
+    display: flex;
+    gap: 20px; /* Separación horizontal entre enlaces */
+}
+
+/* Estilos de los Enlaces en el menú */
+.barra-navegacion .enlaces a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+/* Efecto hover */
+.barra-navegacion .enlaces a:hover {
+    background-color: #158466; /* Verde Azulado Marino */
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+/* =========================================
+   VARIABLES DE COLOR Y TIPOGRAFÍA
+   ========================================= */
+:root {
+    --color-oscuro: #2C3335;      /* Gris Carbón Profundo */
+    --color-acento: #158466;      /* Verde Azulado Marino */
+    --color-blanco: #ffffff;      /* Blanco */
+    --color-fondo: #f4f6f8;       /* Gris muy claro para el fondo general */
+    --color-texto: #333333;       /* Gris oscuro para el texto normal */
+}
+
+/* =========================================
+   ESTILOS GENERALES
+   ========================================= */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: var(--color-oscuro);
+    margin-top: 50px;
+    font-size: 2.5rem;
+    position: relative;
+}
+
+/* Subrayado decorativo para el H1 usando el color de acento */
+h1::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: var(--color-acento);
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
+
+/* Mensaje cuando la lista está vacía */
+p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666666;
+    margin-top: 30px;
+    font-style: italic;
+}
+
+/* =========================================
+   ESTILOS DE LA TABLA
+   ========================================= */
+table {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    border-collapse: collapse;
+    background-color: var(--color-blanco);
+    border-radius: 10px;
+    overflow: hidden; /* Necesario para que el borde redondeado aplique a thead */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Sombra elegante */
+}
+
+thead {
+    background-color: var(--color-oscuro);
+    color: var(--color-blanco);
+}
+
+th, td {
+    padding: 16px 24px;
+    text-align: left;
+}
+
+th {
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+    border-bottom: 2px solid var(--color-acento); /* Detalle sutil en la cabecera */
+}
+
+tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.3s ease;
+}
+
+/* Quitar el borde de la última fila */
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+/* Efecto Hover: Al pasar el ratón, la fila se tiñe súper suave del color de acento */
+tbody tr:hover {
+    background-color: rgba(21, 132, 102, 0.08);
+}
+
+/* =========================================
+   ESTILOS PARA BOTONES (Preparando tu TODO)
+   ========================================= */
+button, .btn {
+    background-color: var(--color-acento);
+    color: var(--color-blanco);
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button:hover, .btn:hover {
+    background-color: #106b52; /* Un tono un poco más oscuro para el hover */
+    transform: translateY(-2px); /* Se levanta un poco al pasar el ratón */
+}
+
+/* =========================================
+   ESTILOS NAVEGACIÓN (Basado en tu HTML anterior)
+   ========================================= */
+.barra-navegacion {
+    background-color: var(--color-oscuro);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.barra-navegacion .logo {
+    color: var(--color-blanco);
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.barra-navegacion a {
+    color: var(--color-blanco);
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+}
+
+.barra-navegacion a:hover {
+    color: var(--color-acento);
+}
+/* =========================================
+   VISTA: AÑADIR TÍTULO (FORMULARIO)
+   ========================================= */
+#añadirPelicula {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+#añadirPelicula h2 {
+    color: #2C3335;
+    font-family: Arial, sans-serif;
+    font-size: 2rem;
+    position: relative;
+    display: inline-block;
+}
+
+#añadirPelicula h2::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 4px;
+    background-color: #158466;
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+#formulario {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    max-width: 600px;
+    margin: 0 auto 50px;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border-top: 5px solid #158466;
+}
+
+#formulario div {
+    margin-bottom: 25px;
+}
+
+#formulario label {
+    display: block;
+    color: #2C3335;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+/* Inputs de texto */
+#formulario input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#formulario input[type="text"]:focus {
+    border-color: #158466;
+    outline: none;
+    box-shadow: 0 0 8px rgba(21, 132, 102, 0.2);
+}
+
+/* Estilos para Radio Buttons en línea (Estado y Valoración) */
+#formulario input[type="radio"] {
+    margin-right: 8px;
+    accent-color: #158466; /* Tiñe el botón nativo con tu color de acento */
+    transform: scale(1.2);
+}
+
+#formulario input[type="radio"] + label {
+    display: inline-block;
+    margin-right: 20px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+/* Botón Guardar */
+#formulario button[type="submit"] {
+    width: 100%;
+    background-color: #158466;
+    color: #ffffff;
+    border: none;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    margin-top: 10px;
+}
+
+#formulario button[type="submit"]:hover {
+    background-color: #106b52;
+    transform: translateY(-2px);
+}
+/* Compensación reforzada */
+body {
+    padding-top: 80px !important;
+}
+/* =========================================
+   BOTÓN DE ELIMINAR (TABLA MI LISTA)
+   ========================================= */
+.btn-eliminar {
+    background-color: #e74c3c; /* Rojo para acción de peligro */
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.btn-eliminar:hover {
+    background-color: #c0392b; /* Rojo más oscuro al pasar el ratón */
+    transform: scale(1.05);
+}
