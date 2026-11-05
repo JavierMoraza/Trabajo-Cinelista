@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>CineLista - Estadisticas</title>
+    <title>CineLista - Estadísticas</title>
     <th:block th:replace="~{fragments/cabecera :: comunes}"></th:block>
     <th:block th:replace="~{fragments/cabecera :: datatables}"></th:block>
     <th:block th:replace="~{fragments/cabecera :: datatables-buttons}"></th:block>
@@ -10,39 +10,126 @@
 
 <div th:replace="~{fragments/nav :: nav}"></div>
 
-<h1>Estadisticas</h1>
+<h1>Estadísticas</h1>
 
-<!--
-  TODO:
-  1) Comprobar jQuery y DataTables (CDN o local) ya agregadas
-  2) Inicializad DataTables sobre la tabla de abajo con la opcion "ajax"
-     apuntando a GET /api/estadisticas (endpoint que crearéis vosotros
-     en el controlador EstadisticasController).
-  3) Id completando: buscador, footerCallback con el total, columna con
-     barra grafica, boton de exportar a CSV con nombre propio.
--->
+<div class="contenedor-informe">
+    <table id="tabla-estadisticas" class="display">
+        <thead>
+        <tr>
+            <th>Título</th>
+            <th>Género</th>
+            <th>Taquilla</th>
+            <th>Nota</th>
+            <th>Gráfico nota</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="2">Total taquilla</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
 
-<table id="tabla-estadisticas">
-    <thead>
-    <tr>
-        <th>Titulo</th>
-        <th>Genero</th>
-        <th>Taquilla</th>
-        <th>Nota</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Las filas las rellenara DataTables via ajax -->
-    </tbody>
-    <tfoot>
-    <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
-    </tfoot>
-</table>
+<script th:inline="javascript">
+    $(function () {
+
+        const urlApi = /*[[@{/api/estadisticas}]]*/ '/api/estadisticas';
+
+        const maxNota = 10;
+
+        const euros = new Intl.NumberFormat('es-ES', {
+            style: 'currency', currency: 'EUR', maximumFractionDigits: 0
+        });
+
+        $('#tabla-estadisticas').DataTable({
+
+            ajax: {
+                url: urlApi,
+                dataSrc: ''
+            },
+
+            columns: [
+                { data: 'titulo' },
+                { data: 'genero' },
+                {
+                    data: 'taquilla',
+                    className: 'dt-right',
+                    render: function (data, type) {
+                        return type === 'display' ? euros.format(data) : data;
+                    }
+                },
+                { data: 'nota', className: 'dt-center' },
+
+                // barra de la nota
+                {
+                    data: 'nota',
+                    orderable: false,
+                    searchable: false,
+                    render: function (data, type, row) {
+                        if (type !== 'display') return data;
+                        const pct = Math.round((data / maxNota) * 100);
+                        return `<div class="barra-fondo"><div class="barra-datos" style="width:${pct}%">${data}</div></div>`;
+                    }
+                }
+            ],
+
+            searching: true,
+
+            dom: 'Bfrtip',
+
+            buttons: [
+                {
+                    extend: 'csvHtml5',
+                    text: 'Exportar CSV',
+                    filename: 'cinelista_estadisticas_P3',
+                    bom: true,
+                    exportOptions: {
+                        columns: [0, 1, 2, 3],
+                        orthogonal: 'export'
+                    }
+                }
+            ],
+
+            // total de taquilla en el pie
+            footerCallback: function (row, data, start, end, display) {
+                const api = this.api();
+
+                const aNumero = function (v) {
+                    return typeof v === 'string' ? v.replace(/[^\d.-]/g, '') * 1
+                         : typeof v === 'number' ? v : 0;
+                };
+
+                const total = api.column(2).data()
+                    .reduce(function (a, b) { return aNumero(a) + aNumero(b); }, 0);
+
+                const totalFiltrado = api.column(2, { search: 'applied' }).data()
+                    .reduce(function (a, b) { return aNumero(a) + aNumero(b); }, 0);
+
+                $(api.column(2).footer()).html(
+                    euros.format(totalFiltrado) +
+                    (totalFiltrado !== total ? '<br><small>(de ' + euros.format(total) + ')</small>' : '')
+                );
+            },
+
+            language: {
+                search: 'Buscar:',
+                lengthMenu: 'Mostrar _MENU_ filas',
+                info: 'Mostrando _START_ a _END_ de _TOTAL_ títulos',
+                infoEmpty: 'Sin resultados',
+                infoFiltered: '(filtrado de _MAX_ títulos)',
+                zeroRecords: 'No hay títulos que coincidan',
+                loadingRecords: 'Cargando...',
+                paginate: { first: 'Primero', last: 'Último', next: 'Siguiente', previous: 'Anterior' }
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
